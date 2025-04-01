@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Happy Monthsary My Love</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Background Hearts -->
+        <div class="floating-hearts" id="floatingHearts"></div>
+        
+        <!-- Gift Box -->
+        <div class="gift-box" id="giftBox">
+            <div class="gift-lid"></div>
+            <div class="gift-box-ribbon horizontal"></div>
+            <div class="gift-box-ribbon vertical"></div>
+            <div class="gift-box-top">
+                <div class="gift-box-center">❤️</div>
+            </div>
+            <div class="confetti-container" id="confettiContainer"></div>
+            <div class="gift-instructions">Click to Open ✨</div>
+        </div>
+        
+        <!-- Photo Book -->
+        <div class="photo-book" id="photoBook">
+            <div class="book-cover" id="bookCover">
+                <div class="cover-content">
+                    <h1>Happy 1st Monthsary</h1>
+                    <p>Our beautiful journey together</p>
+                    <div class="cover-hearts">
+                        <span>❤️</span>
+                        <span>❤️</span>
+                        <span>❤️</span>
+                    </div>
+                    <div class="cover-instruction">Click to Open</div>
+                </div>
+            </div>
+            <div class="book-content" id="bookContent">
+                <div class="page-flip-container" id="pageFlipContainer">
+                    <div class="page current-page" id="currentPage">
+                        <!-- Page content will be updated dynamically -->
+                        <div class="page-content">
+                            <div class="photo-side">
+                                <div class="photo-placeholder">
+                                    <img src="" alt="Special memory" class="photo">
+                                    <div class="heart-frame top-left"></div>
+                                    <div class="heart-frame top-right"></div>
+                                    <div class="heart-frame bottom-left"></div>
+                                    <div class="heart-frame bottom-right"></div>
+                                </div>
+                            </div>
+                            <div class="text-side">
+                                <p></p>
+                                <div class="page-click-hint">Click to continue</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="page-indicator" id="pageIndicator">Page 1 of 10</div>
+            </div>
+        </div>
+        
+        <!-- Special Last Page Envelope -->
+        <div class="final-page" id="finalPage">
+            <div class="final-envelope" id="finalEnvelope">
+                <div class="env-flap" id="envFlap"></div>
+                <div class="env-content">
+                    <div class="env-body">
+                        <div class="env-heart">❤️</div>
+                        <div class="env-text">A Special Note For You</div>
+                    </div>
+                </div>
+            </div>
+            <div class="final-letter" id="finalLetter">
+                <div class="letter-content">
+                    <h2>My Dearest,</h2>
+                    <p>As we celebrate our first monthsary today, I wanted to take a moment to say how sorry I am for any pain I've caused you. Being with you for this past month has been the greatest blessing in my life.</p>
+                    <p>I want you to know that my love for you grows stronger with each passing day. You've shown me what it means to truly care for someone, and I promise to cherish and honor that gift.</p>
+                    <p>I know we're still learning about each other, but I want to reassure you that I'm committed to us – to building something beautiful together. Your happiness means everything to me.</p>
+                    <p>Thank you for your patience, your kindness, and your love. I can't wait to celebrate many more monthsaries with you, each one more special than the last.</p>
+                    <p class="signature">With all my heart,</p>
+                    <p class="signature-name">[Your Name]</p>
+                </div>
+            </div>
+        </div>
+        
+        <button class="restart-button" id="restartButton">
+            <span class="restart-icon">↺</span>
+            <span class="restart-text">Start Over</span>
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

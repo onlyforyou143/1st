@@ -1,0 +1,909 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #fff0f6 0%, #ffe3ee 100%);
+    font-family: 'Montserrat', sans-serif;
+    overflow: hidden;
+    perspective: 1000px;
+    color: #5a3636;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Floating Hearts Background */
+.floating-hearts {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.float-heart {
+    position: absolute;
+    color: rgba(255, 105, 180, 0.3);
+    animation: floatUp var(--duration) linear infinite;
+    top: 100%;
+    transform: scale(var(--size));
+    left: var(--left);
+}
+
+@keyframes floatUp {
+    0% {
+        opacity: 0;
+        transform: translateY(0) scale(var(--size)) rotate(0deg);
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-1000px) scale(var(--size)) rotate(var(--rotate));
+    }
+}
+
+/* Gift Box */
+.gift-box {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    transition: transform 1s ease, opacity 0.8s ease;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    z-index: 10;
+    background: #ff6b95;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(255, 105, 180, 0.3);
+    overflow: visible;
+}
+
+.gift-box:hover {
+    transform: translateY(-10px);
+}
+
+.gift-box.opened {
+    transform: scale(0.5) rotate(360deg);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.gift-lid {
+    position: absolute;
+    top: -25px;
+    left: 0;
+    width: 100%;
+    height: 25px;
+    background: #ff4081;
+    border-radius: 15px 15px 0 0;
+    z-index: 1;
+    transition: transform 0.5s ease;
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.gift-box:hover .gift-lid {
+    transform: translateY(-15px) rotateX(20deg);
+}
+
+.gift-box-ribbon {
+    position: absolute;
+    background: #f8bbd0;
+    z-index: 2;
+}
+
+.gift-box-ribbon.horizontal {
+    width: 100%;
+    height: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(to right, #f8bbd0, #f48fb1, #f8bbd0);
+}
+
+.gift-box-ribbon.vertical {
+    height: 100%;
+    width: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(to bottom, #f8bbd0, #f48fb1, #f8bbd0);
+}
+
+.gift-box-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+}
+
+.gift-box-center {
+    width: 60px;
+    height: 60px;
+    background: #f8bbd0;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.confetti-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.gift-instructions {
+    position: absolute;
+    bottom: -40px;
+    width: 100%;
+    text-align: center;
+    color: #ff4081;
+    font-size: 18px;
+    font-weight: 500;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    animation: fadeInOut 2s infinite;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0.7;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.7;
+    }
+}
+
+/* Photo Book */
+.photo-book {
+    position: absolute;
+    width: 800px;
+    height: 500px;
+    transform-style: preserve-3d;
+    perspective: 1500px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+    z-index: 5;
+}
+
+.photo-book.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.book-cover {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+    transform-origin: left;
+    transform-style: preserve-3d;
+    transition: transform 1.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(255, 105, 180, 0.3);
+    z-index: 3;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.book-cover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M50 30L55 45H70L60 55L65 70L50 60L35 70L40 55L30 45H45Z" fill="rgba(255,255,255,0.1)"/></svg>');
+    background-size: 80px;
+    opacity: 0.3;
+}
+
+.book-cover.open {
+    transform: rotateY(-180deg);
+}
+
+.cover-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    z-index: 2;
+}
+
+.cover-content h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 56px;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.cover-content p {
+    font-size: 22px;
+    margin-bottom: 30px;
+    font-weight: 300;
+}
+
+.cover-hearts {
+    display: flex;
+    margin: 20px 0;
+}
+
+.cover-hearts span {
+    font-size: 30px;
+    margin: 0 10px;
+    animation: heartbeat 1.5s infinite;
+}
+
+.cover-hearts span:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.cover-hearts span:nth-child(3) {
+    animation-delay: 1s;
+}
+
+@keyframes heartbeat {
+    0% {
+        transform: scale(1);
+    }
+    25% {
+        transform: scale(1.2);
+    }
+    50% {
+        transform: scale(1);
+    }
+    75% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.cover-instruction {
+    position: absolute;
+    bottom: 30px;
+    font-size: 18px;
+    opacity: 0.8;
+    animation: fadeInOut 2s infinite;
+}
+
+.book-content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: white;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) inset;
+    z-index: 1;
+}
+
+.page-flip-container {
+    position: relative;
+    width: 90%;
+    height: 80%;
+    perspective: 1500px;
+}
+
+.page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-origin: center left;
+    transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transform-style: preserve-3d;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.page.current-page {
+    z-index: 2;
+}
+
+.page.flip {
+    transform: rotateY(-180deg);
+}
+
+.page-content {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+.photo-side, .text-side {
+    width: 50%;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.photo-placeholder {
+    position: relative;
+    width: 100%;
+    height: 85%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(255, 105, 180, 0.2);
+}
+
+.heart-frame {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #ff6b95;
+}
+
+.heart-frame.top-left {
+    top: 5px;
+    left: 5px;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    animation: rotateSlow 8s linear infinite;
+}
+
+.heart-frame.top-right {
+    top: 5px;
+    right: 5px;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    animation: rotateSlow 8s linear infinite reverse;
+}
+
+.heart-frame.bottom-left {
+    bottom: 5px;
+    left: 5px;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    animation: rotateSlow 8s linear infinite reverse;
+}
+
+.heart-frame.bottom-right {
+    bottom: 5px;
+    right: 5px;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    animation: rotateSlow 8s linear infinite;
+}
+
+@keyframes rotateSlow {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.5s ease;
+}
+
+.page:hover .photo {
+    transform: scale(1.05);
+}
+
+.text-side {
+    position: relative;
+    background: linear-gradient(135deg, rgba(255, 240, 246, 0.5) 0%, rgba(255, 227, 238, 0.5) 100%);
+    border-radius: 0 10px 10px 0;
+}
+
+.text-side p {
+    font-size: 18px;
+    line-height: 1.6;
+    text-align: center;
+    color: #5a3636;
+    font-family: 'Dancing Script', cursive;
+    max-width: 90%;
+}
+
+.page-click-hint {
+    position: absolute;
+    bottom: 20px;
+    font-size: 14px;
+    color: rgba(90, 54, 54, 0.6);
+    animation: fadeInOut 2s infinite;
+}
+
+.page-indicator {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #ff6b95;
+    font-weight: 500;
+}
+
+/* Final Page with Envelope */
+.final-page {
+    position: absolute;
+    width: 600px;
+    height: 450px;
+    perspective: 1500px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+    z-index: 5;
+}
+
+.final-page.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.final-envelope {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #ffc3d4 0%, #ffacc3 100%);
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(255, 105, 180, 0.3);
+    z-index: 2;
+    overflow: hidden;
+}
+
+.final-envelope:hover {
+    transform: translateY(-10px);
+}
+
+.final-envelope.open {
+    transform: translateY(-10px);
+}
+
+.final-envelope.open .env-flap {
+    transform: rotateX(-180deg);
+    /* Adjust z-index when open to ensure letter is visible */
+    z-index: 2;
+}
+
+.env-flap {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 50%;
+        background: linear-gradient(to bottom, #ffacc3, #ffc3d4);
+        transform-origin: top;
+        transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        z-index: 3;
+        clip-path: polygon(0 0, 50% 30%, 100% 0, 100% 100%, 0 100%);
+        border-radius: 15px 15px 0 0;
+    }
+
+
+.env-content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.env-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 30px;
+}
+
+.env-heart {
+    font-size: 60px;
+    margin-bottom: 20px;
+    animation: heartbeat 1.5s infinite;
+}
+
+.env-text {
+    font-family: 'Dancing Script', cursive;
+    font-size: 32px;
+    color: white;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.final-letter {
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    left: 5%;
+    top: 5%;
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: transform 1s 0.5s, opacity 1s 0.5s;
+    overflow-y: auto;
+    /* Fixed z-index to ensure letter appears above envelope parts */
+    z-index: 1;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.final-letter.active {
+    transform: translateY(0);
+    opacity: 1;
+    /* When active, ensure it has higher z-index */
+    z-index: 4;
+}
+
+
+.letter-content {
+    line-height: 1.8;
+}
+
+.letter-content h2 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #ff6b95;
+    text-align: center;
+}
+
+.letter-content p {
+    margin-bottom: 20px;
+    font-size: 17px;
+    color: #5a3636;
+}
+
+.signature {
+    font-family: 'Dancing Script', cursive;
+    font-size: 24px;
+    text-align: right;
+    margin-top: 40px;
+    margin-bottom: 5px !important;
+}
+
+.signature-name {
+    font-family: 'Dancing Script', cursive;
+    font-size: 32px;
+    text-align: right;
+    color: #ff6b95 !important;
+}
+
+/* Restart Button */
+.restart-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    z-index: 100;
+    visibility: hidden;
+    opacity: 0;
+    box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+}
+
+.restart-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(255, 105, 180, 0.4);
+}
+
+.restart-button.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+.restart-icon {
+    font-size: 20px;
+    margin-right: 8px;
+}
+
+/* Hidden class */
+.hidden {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Mobile Responsive Styles */
+@media screen and (max-width: 768px) {
+    /* Container adjustments */
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+    
+    /* Gift Box adjustments */
+    .gift-box {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .gift-lid {
+        top: -20px;
+        height: 20px;
+    }
+    
+    .gift-box-ribbon.horizontal,
+    .gift-box-ribbon.vertical {
+        width: 30px;
+    }
+    
+    .gift-box-center {
+        width: 45px;
+        height: 45px;
+        font-size: 22px;
+    }
+    
+    .gift-instructions {
+        font-size: 14px;
+    }
+    
+    /* Photo Book adjustments */
+    .photo-book {
+        width: 95%;
+        height: 80vh;
+        max-height: 500px;
+    }
+    
+    .cover-content h1 {
+        font-size: 36px;
+    }
+    
+    .cover-content p {
+        font-size: 16px;
+    }
+    
+    .cover-hearts span {
+        font-size: 24px;
+    }
+    
+    .page-flip-container {
+        width: 95%;
+    }
+    
+    /* Page content adjustments */
+    .page-content {
+        flex-direction: column;
+    }
+    
+    .photo-side, .text-side {
+        width: 100%;
+        height: 50%;
+        padding: 10px;
+    }
+    
+    .photo-side {
+        height: 60%;
+    }
+    
+    .text-side {
+        height: 40%;
+        border-radius: 0 0 10px 10px;
+    }
+    
+    .text-side p {
+        font-size: 16px;
+        line-height: 1.4;
+    }
+    
+    .photo-placeholder {
+        height: 95%;
+    }
+    
+    .page-indicator {
+        margin-top: 5px;
+        font-size: 12px;
+    }
+    
+    /* Final envelope adjustments */
+    .final-page {
+        width: 95%;
+        height: 80vh;
+        max-height: 450px;
+    }
+    
+    .env-text {
+        font-size: 24px;
+    }
+    
+    .letter-content h2 {
+        font-size: 26px;
+    }
+    
+    .letter-content p {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+    
+    .signature {
+        font-size: 20px;
+    }
+    
+    .signature-name {
+        font-size: 24px;
+    }
+    
+    /* Restart button adjustments */
+    .restart-button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+    
+    /* Orientation-specific adjustments */
+    @media (orientation: portrait) {
+        .photo-book, .final-page {
+            height: 80vh;
+        }
+    }
+    
+    @media (orientation: landscape) {
+        .photo-book, .final-page {
+            height: 85vh;
+            width: 90%;
+        }
+        
+        /* Keep page content side by side in landscape */
+        .page-content {
+            flex-direction: row;
+        }
+        
+        .photo-side, .text-side {
+            width: 50%;
+            height: 100%;
+        }
+        
+        .text-side {
+            border-radius: 0 10px 10px 0;
+        }
+    }
+}
+
+/* Small mobile devices */
+@media screen and (max-width: 480px) {
+    .gift-box {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .cover-content h1 {
+        font-size: 30px;
+    }
+    
+    .cover-content p {
+        font-size: 14px;
+    }
+    
+    .letter-content p {
+        font-size: 13px;
+    }
+    
+    .env-text {
+        font-size: 20px;
+    }
+}
+
+/* Touch device improvements */
+@media (hover: none) {
+    /* Enhance touch targets */
+    .gift-box, .book-cover, .page, .final-envelope, .restart-button {
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* Modify hover animations for touch devices */
+    .gift-box:active {
+        transform: translateY(-5px);
+    }
+    
+    .gift-box:active .gift-lid {
+        transform: translateY(-10px) rotateX(20deg);
+    }
+    
+    .page:active .photo {
+        transform: scale(1.02);
+    }
+    
+    /* Add visual feedback for touch interactions */
+    .page-click-hint, .cover-instruction, .gift-instructions {
+        opacity: 1;
+    }
+}
+
+/* Fix for iOS Safari viewport height issues */
+@supports (-webkit-touch-callout: none) {
+    .photo-book, .final-page {
+        height: -webkit-fill-available;
+        max-height: 80vh;
+    }
+}
+
+:root {
+    --app-height: 100vh;
+}
+
+/* Use the variable for height-dependent elements */
+.photo-book, .final-page {
+    height: var(--app-height);
+    max-height: 500px;
+}
+
+/* Add these iOS-specific fixes */
+@supports (-webkit-touch-callout: none) {
+    body {
+        /* Prevent rubber band scrolling effect on iOS */
+        position: fixed;
+        width: 100%;
+        height: var(--app-height);
+        overflow: hidden;
+    }
+    
+    /* Enable scrolling for content that needs it */
+    .final-letter, .text-side {
+        -webkit-overflow-scrolling: touch;
+    }
+}
